@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Fokus",
+  "version": "1.0.0",
+  "description": "Turn your goals into focused time.",
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["notifications", "alarms", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

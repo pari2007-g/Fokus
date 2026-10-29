@@ -1,0 +1,440 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 360px;
+  min-height: 500px;
+  font-family: Arial, sans-serif;
+  background: #fffafa;
+  color: #222;
+}
+
+.container {
+  padding: 22px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 6px 0 24px;
+  color: #777;
+  font-size: 13px;
+}
+
+label {
+  display: block;
+  margin: 16px 0 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #222;
+}
+
+/* Timer circle */
+
+.timer-circle {
+  width: 150px;
+  height: 150px;
+  margin: 18px auto 12px;
+  border: 8px solid #e8e8e8;
+  border-radius: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#timerMinutes {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.timer-circle span {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Duration buttons */
+
+.duration-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.duration-btn {
+  width: 45px;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  background: white;
+  cursor: pointer;
+}
+
+.duration-btn.active {
+  background: #222;
+  color: white;
+  border-color: #222;
+}
+
+/* Main button */
+
+.main-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 9px;
+  background: #222;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.main-btn:hover {
+  background: #333;
+}
+
+/* Timer controls */
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.stop-btn {
+  background: #f3dede;
+  color: #b3261e;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Countdown */
+
+.countdown {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.status-message {
+  min-height: 18px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+.session-summary {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f4f4f4;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  font-size: 12px;
+}
+
+.session-summary strong {
+  font-size: 13px;
+}
+
+.session-summary span {
+  color: #666;
+}
+.stats-section {
+  margin-top: 20px;
+}
+
+.stats-section h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-card {
+  padding: 14px;
+  border-radius: 10px;
+  background: #f4f4f4;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-card strong {
+  font-size: 22px;
+}
+
+.stat-card span {
+  font-size: 11px;
+  color: #666;
+}
+.recent-sessions {
+  margin-top: 20px;
+}
+
+.recent-sessions h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.session-item {
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #f4f4f4;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.session-item strong {
+  font-size: 13px;
+}
+
+.session-item span {
+  font-size: 11px;
+  color: #666;
+}
+
+.empty-sessions {
+  font-size: 12px;
+  color: #777;
+}
+.session-item small {
+  font-size: 10px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Today's Progress */
+
+.daily-progress {
+  margin-top: 20px;
+}
+
+.daily-progress h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.daily-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.daily-stat-card {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.daily-stat-card strong {
+  font-size: 20px;
+}
+
+.daily-stat-card span {
+  font-size: 11px;
+  color: #666;
+}
+
+.daily-goal {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff5f5;
+}
+
+.daily-goal-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.progress-track {
+  height: 8px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e5e5e5;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: 10px;
+  background: #222;
+  transition: width 0.3s ease;
+}
+
+#dailyProgressText {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #666;
+}
+
+/* Daily Goal Selector */
+#dailyGoalSelect {
+  padding: 5px 8px;
+  border: 1px solid #e5caca;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+#dailyGoalSelect:focus {
+  border-color: #d88c9a;
+}
+
+/* Session History Filters */
+.history-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #666;
+}
+
+#historyFilter {
+  padding: 7px 9px;
+  border: 1px solid #e5caca;
+  border-radius: 6px;
+  background: #fff;
+  color: #222;
+  font-size: 12px;
+}
+/* 7-Day Focus Graph */
+.weekly-graph {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #f0dddd;
+  border-radius: 12px;
+}
+
+.weekly-graph h2 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.graph-subtitle {
+  margin: 0 0 18px;
+  font-size: 12px;
+  color: #888;
+}
+
+.focus-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 8px;
+  height: 150px;
+  padding: 10px 0 0;
+  border-bottom: 1px solid #eadada;
+}
+
+.chart-day {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.chart-bar-area {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chart-bar {
+  width: 65%;
+  max-width: 24px;
+  min-height: 3px;
+  background: #e7a0ae;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-bar.today {
+  background: #d94f70;
+}
+
+.chart-minutes {
+  font-size: 10px;
+  color: #777;
+}
+
+.chart-label {
+  padding-bottom: 8px;
+  font-size: 10px;
+  color: #666;
+}
+
+.chart-empty {
+  width: 100%;
+  align-self: center;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
