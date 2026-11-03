@@ -1,24 +1,35 @@
 const workingOn = document.getElementById("workingOn");
+
 const task = document.getElementById("task");
 
 const startBtn = document.getElementById("startBtn");
+
 const pauseBtn = document.getElementById("pauseBtn");
+
 const stopBtn = document.getElementById("stopBtn");
 
 const timerControls = document.getElementById("timerControls");
+
 const timerMinutes = document.getElementById("timerMinutes");
+
 const countdown = document.getElementById("countdown");
+
 const statusMessage = document.getElementById("statusMessage");
 
 const sessionSummary = document.getElementById("sessionSummary");
+
 const completedGoal = document.getElementById("completedGoal");
+
 const completedTime = document.getElementById("completedTime");
 
 const durationButtons = document.querySelectorAll(".duration-btn");
 
 let selectedDuration = 25; // Temporary 25-minute timer for testing
+
 let remainingSeconds = selectedDuration * 60;
+
 let timerInterval = null;
+
 let isPaused = false;
 
 // ==============================
@@ -115,13 +126,16 @@ function startTimer() {
       timerInterval = null;
 
       countdown.textContent = "00:00";
+
       timerControls.classList.add("hidden");
       startBtn.classList.remove("hidden");
+
       pauseBtn.textContent = "Pause";
 
       statusMessage.textContent = `✅ Goal completed: ${task.value.trim()}`;
 
       sessionSummary.classList.remove("hidden");
+
       completedGoal.textContent = `Goal: ${task.value.trim()}`;
       completedTime.textContent = `Focus time: ${selectedDuration} min`;
     }
@@ -138,6 +152,7 @@ pauseBtn.addEventListener("click", () => {
 
     clearInterval(timerInterval);
     timerInterval = null;
+
     isPaused = true;
 
     pauseBtn.textContent = "Resume";
@@ -149,6 +164,7 @@ pauseBtn.addEventListener("click", () => {
     });
 
     isPaused = false;
+
     pauseBtn.textContent = "Pause";
 
     statusMessage.textContent = `Focusing on: ${task.value.trim()}`;
@@ -164,13 +180,16 @@ pauseBtn.addEventListener("click", () => {
         timerInterval = null;
 
         countdown.textContent = "00:00";
+
         timerControls.classList.add("hidden");
         startBtn.classList.remove("hidden");
+
         pauseBtn.textContent = "Pause";
 
         statusMessage.textContent = `✅ Goal completed: ${task.value.trim()}`;
 
         sessionSummary.classList.remove("hidden");
+
         completedGoal.textContent = `Goal: ${task.value.trim()}`;
         completedTime.textContent = `Focus time: ${selectedDuration} min`;
       }
@@ -195,9 +214,11 @@ stopBtn.addEventListener("click", () => {
 
   timerControls.classList.add("hidden");
   countdown.classList.add("hidden");
+
   startBtn.classList.remove("hidden");
 
   pauseBtn.textContent = "Pause";
+
   sessionSummary.classList.add("hidden");
 
   statusMessage.textContent = "Focus session stopped.";
@@ -232,6 +253,7 @@ chrome.storage.local.get("timerState", (result) => {
     if (remaining <= 0) return;
 
     remainingSeconds = remaining;
+
     workingOn.value = state.workingOn || "";
     task.value = state.task || "";
 
@@ -248,6 +270,7 @@ chrome.storage.local.get("timerState", (result) => {
       );
 
       remainingSeconds = secondsLeft;
+
       updateCountdown();
 
       if (secondsLeft <= 0) {
@@ -255,8 +278,10 @@ chrome.storage.local.get("timerState", (result) => {
         timerInterval = null;
 
         countdown.textContent = "00:00";
+
         timerControls.classList.add("hidden");
         startBtn.classList.remove("hidden");
+
         statusMessage.textContent = "🎉 Focus session complete!";
       }
     }, 1000);
@@ -280,6 +305,7 @@ chrome.storage.local.get("timerState", (result) => {
     updateCountdown();
 
     isPaused = true;
+
     pauseBtn.textContent = "Resume";
     statusMessage.textContent = "Focus paused.";
   }
@@ -303,9 +329,11 @@ chrome.storage.local.get("currentGoal", (result) => {
 // ==============================
 
 chrome.storage.local.get("focusSessions", (result) => {
-  const sessions = result.focusSessions || [];
+  // IMPORTANT: let allows us to update the sessions array after deletion.
+  let sessions = result.focusSessions || [];
 
   // ALL-TIME STATS
+
   const totalSessions = sessions.length;
 
   const totalMinutes = sessions.reduce(
@@ -314,16 +342,20 @@ chrome.storage.local.get("focusSessions", (result) => {
   );
 
   document.getElementById("totalSessions").textContent = totalSessions;
+
   document.getElementById("totalMinutes").textContent = totalMinutes;
 
   // SESSION HISTORY WITH DATE FILTERS
+
   const sessionList = document.getElementById("sessionList");
+
   const historyFilter = document.getElementById("historyFilter");
 
   function renderSessionHistory() {
     if (!sessionList) return;
 
     const filter = historyFilter ? historyFilter.value : "all";
+
     const now = new Date();
 
     let filteredSessions = sessions.filter((session) => {
@@ -364,12 +396,14 @@ chrome.storage.local.get("focusSessions", (result) => {
       const emptyMessage = document.createElement("p");
 
       emptyMessage.className = "empty-sessions";
+
       emptyMessage.textContent =
         filter === "all"
           ? "No completed sessions yet."
           : "No sessions found for this period.";
 
       sessionList.appendChild(emptyMessage);
+
       return;
     }
 
@@ -378,17 +412,21 @@ chrome.storage.local.get("focusSessions", (result) => {
       .reverse()
       .forEach((session) => {
         const sessionItem = document.createElement("div");
+
         sessionItem.className = "session-item";
 
         const date = new Date(Number(session.completedAt));
 
         const title = document.createElement("strong");
+
         title.textContent = session.task || "Untitled goal";
 
         const details = document.createElement("span");
+
         details.textContent = `${session.workingOn || "Focus"} • ${session.duration} min`;
 
         const timestamp = document.createElement("small");
+
         timestamp.textContent = `${date.toLocaleDateString()} • ${date.toLocaleTimeString(
           [],
           {
@@ -397,7 +435,29 @@ chrome.storage.local.get("focusSessions", (result) => {
           },
         )}`;
 
-        sessionItem.append(title, details, timestamp);
+        // DELETE SESSION BUTTON
+
+        const deleteButton = document.createElement("button");
+
+        deleteButton.textContent = "Delete";
+
+        deleteButton.className = "delete-session";
+
+        deleteButton.addEventListener("click", () => {
+          const confirmed = confirm("Delete this session?");
+
+          if (!confirmed) return;
+
+          sessions = sessions.filter((item) => item !== session);
+
+          chrome.storage.local.set({ focusSessions: sessions }, () => {
+            // Refresh all displayed statistics and progress.
+            window.location.reload();
+          });
+        });
+
+        sessionItem.append(title, details, timestamp, deleteButton);
+
         sessionList.appendChild(sessionItem);
       });
   }
@@ -408,13 +468,17 @@ chrome.storage.local.get("focusSessions", (result) => {
 
   renderSessionHistory();
 
+  // ==============================
   // 7-DAY FOCUS GRAPH
+  // ==============================
+
   const focusChart = document.getElementById("focusChart");
 
   if (focusChart) {
     focusChart.innerHTML = "";
 
     const today = new Date();
+
     const dailyMinutes = [];
 
     for (let i = 6; i >= 0; i--) {
@@ -425,6 +489,7 @@ chrome.storage.local.get("focusSessions", (result) => {
       );
 
       const minutes = sessions
+
         .filter((session) => {
           if (!session.completedAt) return false;
 
@@ -436,6 +501,7 @@ chrome.storage.local.get("focusSessions", (result) => {
             completedDate.getDate() === day.getDate()
           );
         })
+
         .reduce((total, session) => total + Number(session.duration || 0), 0);
 
       dailyMinutes.push({
@@ -452,16 +518,21 @@ chrome.storage.local.get("focusSessions", (result) => {
 
     dailyMinutes.forEach((item) => {
       const dayColumn = document.createElement("div");
+
       dayColumn.className = "chart-day";
 
       const minutesLabel = document.createElement("span");
+
       minutesLabel.className = "chart-minutes";
+
       minutesLabel.textContent = item.minutes;
 
       const barArea = document.createElement("div");
+
       barArea.className = "chart-bar-area";
 
       const bar = document.createElement("div");
+
       bar.className = item.isToday ? "chart-bar today" : "chart-bar";
 
       bar.style.height =
@@ -472,17 +543,25 @@ chrome.storage.local.get("focusSessions", (result) => {
       barArea.appendChild(bar);
 
       const dayLabel = document.createElement("span");
+
       dayLabel.className = "chart-label";
+
       dayLabel.textContent = item.isToday
         ? "Today"
-        : item.day.toLocaleDateString("en-US", { weekday: "short" });
+        : item.day.toLocaleDateString("en-US", {
+            weekday: "short",
+          });
 
       dayColumn.append(minutesLabel, barArea, dayLabel);
+
       focusChart.appendChild(dayColumn);
     });
   }
 
+  // ==============================
   // TODAY'S PROGRESS
+  // ==============================
+
   const now = new Date();
 
   const todaySessions = sessions.filter((session) => {
