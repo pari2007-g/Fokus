@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,8 +14,7 @@
       <p class="subtitle">Turn your goals into focused time.</p>
 
       <!-- Goal -->
-
-      <label for="workingOn"> What are you working on? </label>
+      <label for="workingOn">What are you working on?</label>
 
       <input
         type="text"
@@ -25,71 +23,57 @@
       />
 
       <!-- Task -->
-
-      <label for="task"> What do you want to accomplish? </label>
+      <label for="task">What do you want to accomplish?</label>
 
       <input type="text" id="task" placeholder="e.g. Complete Binary Trees" />
 
       <!-- Timer -->
-
-      <label> Focus duration </label>
+      <label>Focus duration</label>
 
       <div class="timer-circle">
         <div id="timerMinutes">25</div>
-
-        <span> minutes </span>
+        <span>minutes</span>
       </div>
 
       <div class="duration-options">
         <button class="duration-btn active" data-duration="25">25</button>
-
         <button class="duration-btn" data-duration="50">50</button>
-
         <button class="duration-btn" data-duration="90">90</button>
       </div>
 
       <!-- Controls -->
-
       <button id="startBtn" class="main-btn">Start Focus</button>
 
       <div id="timerControls" class="timer-controls hidden">
         <button id="pauseBtn" class="control-btn">Pause</button>
-
         <button id="stopBtn" class="control-btn stop-btn">Stop</button>
       </div>
 
       <!-- Countdown -->
-
       <div id="countdown" class="countdown hidden">1:00</div>
 
       <p id="statusMessage" class="status-message"></p>
 
       <!-- Session Summary -->
-
       <div id="sessionSummary" class="session-summary hidden">
-        <strong> ✅ Goal completed </strong>
-
+        <strong>✅ Goal completed</strong>
         <span id="completedGoal"></span>
-
         <span id="completedTime"></span>
       </div>
 
       <!-- Focus Statistics -->
-
       <div id="statsSection" class="stats-section">
         <h2>Focus Stats</h2>
 
         <div class="stats-grid">
           <div class="stat-card">
-            <strong id="totalSessions"> 0 </strong>
-
-            <span> Sessions </span>
+            <strong id="totalSessions">0</strong>
+            <span>Sessions</span>
           </div>
 
           <div class="stat-card">
-            <strong id="totalMinutes"> 0 </strong>
-
-            <span> Minutes </span>
+            <strong id="totalMinutes">0</strong>
+            <span>Minutes</span>
           </div>
         </div>
       </div>
@@ -113,6 +97,7 @@
         <div class="daily-goal">
           <div class="daily-goal-label">
             <span>Daily focus goal</span>
+
             <select id="dailyGoalSelect">
               <option value="30">30 min</option>
               <option value="60">60 min</option>
@@ -129,9 +114,11 @@
           <p id="dailyProgressText">0 of 120 minutes completed</p>
         </div>
       </div>
+
       <!-- 7-Day Focus Graph -->
       <div id="weeklyGraph" class="weekly-graph">
         <h2>Last 7 Days</h2>
+
         <p class="graph-subtitle">Your daily focus time in minutes</p>
 
         <div id="focusChart" class="focus-chart">
@@ -139,11 +126,21 @@
         </div>
       </div>
 
+      <!-- Session History -->
       <div id="recentSessions" class="recent-sessions">
         <h2>Session History</h2>
 
+        <!-- Search Sessions -->
+        <input
+          type="search"
+          id="sessionSearch"
+          placeholder="Search by task or activity..."
+          aria-label="Search session history"
+        />
+
         <div class="history-filters">
           <label for="historyFilter">Show sessions</label>
+
           <select id="historyFilter">
             <option value="all">All time</option>
             <option value="today">Today</option>
