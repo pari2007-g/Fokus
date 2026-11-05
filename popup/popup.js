@@ -348,13 +348,16 @@ chrome.storage.local.get("focusSessions", (result) => {
   // SESSION HISTORY WITH DATE FILTERS
 
   const sessionList = document.getElementById("sessionList");
-
   const historyFilter = document.getElementById("historyFilter");
+  const sessionSearch = document.getElementById("sessionSearch");
 
   function renderSessionHistory() {
     if (!sessionList) return;
 
     const filter = historyFilter ? historyFilter.value : "all";
+    const searchQuery = sessionSearch
+      ? sessionSearch.value.trim().toLowerCase()
+      : "";
 
     const now = new Date();
 
@@ -364,6 +367,7 @@ chrome.storage.local.get("focusSessions", (result) => {
       );
     });
 
+    // DATE FILTER
     if (filter === "today") {
       filteredSessions = filteredSessions.filter((session) => {
         const date = new Date(Number(session.completedAt));
@@ -390,20 +394,29 @@ chrome.storage.local.get("focusSessions", (result) => {
       });
     }
 
+    // SEARCH FILTER
+    if (searchQuery) {
+      filteredSessions = filteredSessions.filter((session) => {
+        const taskName = (session.task || "").toLowerCase();
+        const activity = (session.workingOn || "").toLowerCase();
+
+        return taskName.includes(searchQuery) || activity.includes(searchQuery);
+      });
+    }
+
     sessionList.innerHTML = "";
 
     if (filteredSessions.length === 0) {
       const emptyMessage = document.createElement("p");
-
       emptyMessage.className = "empty-sessions";
 
-      emptyMessage.textContent =
-        filter === "all"
+      emptyMessage.textContent = searchQuery
+        ? "No matching sessions found."
+        : filter === "all"
           ? "No completed sessions yet."
           : "No sessions found for this period.";
 
       sessionList.appendChild(emptyMessage);
-
       return;
     }
 
@@ -412,21 +425,17 @@ chrome.storage.local.get("focusSessions", (result) => {
       .reverse()
       .forEach((session) => {
         const sessionItem = document.createElement("div");
-
         sessionItem.className = "session-item";
 
         const date = new Date(Number(session.completedAt));
 
         const title = document.createElement("strong");
-
         title.textContent = session.task || "Untitled goal";
 
         const details = document.createElement("span");
-
         details.textContent = `${session.workingOn || "Focus"} • ${session.duration} min`;
 
         const timestamp = document.createElement("small");
-
         timestamp.textContent = `${date.toLocaleDateString()} • ${date.toLocaleTimeString(
           [],
           {
@@ -435,35 +444,33 @@ chrome.storage.local.get("focusSessions", (result) => {
           },
         )}`;
 
-        // DELETE SESSION BUTTON
-
+        // DELETE SESSION
         const deleteButton = document.createElement("button");
-
         deleteButton.textContent = "Delete";
-
         deleteButton.className = "delete-session";
 
         deleteButton.addEventListener("click", () => {
           const confirmed = confirm("Delete this session?");
-
           if (!confirmed) return;
 
           sessions = sessions.filter((item) => item !== session);
 
           chrome.storage.local.set({ focusSessions: sessions }, () => {
-            // Refresh all displayed statistics and progress.
             window.location.reload();
           });
         });
 
         sessionItem.append(title, details, timestamp, deleteButton);
-
         sessionList.appendChild(sessionItem);
       });
   }
 
   if (historyFilter) {
     historyFilter.addEventListener("change", renderSessionHistory);
+  }
+
+  if (sessionSearch) {
+    sessionSearch.addEventListener("input", renderSessionHistory);
   }
 
   renderSessionHistory();
